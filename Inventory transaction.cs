@@ -42,7 +42,6 @@ namespace Sales_Management
                 }
                 connection.Close();
 
-                // Gán danh sách mã sản phẩm cho AutoComplete của txtProductCode
                 txtProductCode.AutoCompleteCustomSource = productCodes;
             }
             catch (Exception ex)
@@ -76,10 +75,47 @@ namespace Sales_Management
             txtTransactionDate.Text = row.Cells["TransactionDate"].Value?.ToString();
         }
 
+        private bool ValidateTransaction()
+        {
+            // Check if all required fields are filled
+            if (string.IsNullOrWhiteSpace(txtProductCode.Text) ||
+                string.IsNullOrWhiteSpace(txtEmployeeCode.Text) ||
+                string.IsNullOrWhiteSpace(cboTransactionType.Text) ||
+                string.IsNullOrWhiteSpace(txtQuantity.Text) ||
+                string.IsNullOrWhiteSpace(txtTransactionDate.Text))
+            {
+                MessageBox.Show("Please fill in all the required fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            // Check if quantity is a positive integer
+            if (!int.TryParse(txtQuantity.Text, out int quantity) || quantity <= 0)
+            {
+                MessageBox.Show("Quantity must be a positive integer.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            // Check if transaction date is in the correct format
+            if (!DateTime.TryParse(txtTransactionDate.Text, out _))
+            {
+                MessageBox.Show("Transaction date must be in a valid date format MM/DD/YYYY.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+
         private void btnInsert_Click(object sender, EventArgs e)
         {
             try
             {
+                // Validate transaction
+                if (!ValidateTransaction())
+                {
+                    return;
+                }
+
                 // Insert transaction
                 string insertQuery = "INSERT INTO InventoryTransaction (ProductCode, EmployeeCode,TransactionType, Quantity, TransactionDate) " +
                                      "VALUES (@productcode, @employeecode ,@transactiontype, @quantity, @transactiondate)";
@@ -120,7 +156,13 @@ namespace Sales_Management
                     return;
                 }
 
-                // Cập nhật thông tin giao dịch
+                // Validate transaction
+                if (!ValidateTransaction())
+                {
+                    return;
+                }
+
+                // Update transaction
                 string updateQuery = "UPDATE InventoryTransaction SET ProductCode = @productcode, " +
                                      "EmployeeCode = @employeecode, TransactionType = @transactiontype, " +
                                      "Quantity = @quantity, TransactionDate = @transactiondate " +

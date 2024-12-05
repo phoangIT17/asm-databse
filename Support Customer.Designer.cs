@@ -214,7 +214,7 @@
             this.SupportType,
             this.IssueDescription});
             this.dgvSupport.GridColor = System.Drawing.Color.DimGray;
-            this.dgvSupport.Location = new System.Drawing.Point(49, 318);
+            this.dgvSupport.Location = new System.Drawing.Point(77, 323);
             this.dgvSupport.Name = "dgvSupport";
             this.dgvSupport.RowHeadersWidth = 51;
             this.dgvSupport.RowTemplate.Height = 24;

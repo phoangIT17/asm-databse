@@ -1,6 +1,6 @@
 ﻿namespace Sales_Management
 {
-    partial class frmManagementEmployee
+    partial class frmEmployeeManagement
     {
         /// <summary>
         /// Required designer variable.
@@ -45,13 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvEmployee = new System.Windows.Forms.DataGridView();
-            this.EmployeeID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmployeeCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmployeeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Authority = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cboAuthority = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,6 +54,13 @@
             this.btnReturn = new System.Windows.Forms.Button();
             this.txtSearchEmployeeName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.EmployeeID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmployeeCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmployeeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Authority = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).BeginInit();
             this.SuspendLayout();
             // 
@@ -231,70 +231,13 @@
             this.Username,
             this.Password});
             this.dgvEmployee.GridColor = System.Drawing.Color.DimGray;
-            this.dgvEmployee.Location = new System.Drawing.Point(21, 286);
+            this.dgvEmployee.Location = new System.Drawing.Point(12, 286);
             this.dgvEmployee.Name = "dgvEmployee";
             this.dgvEmployee.RowHeadersWidth = 51;
             this.dgvEmployee.RowTemplate.Height = 24;
-            this.dgvEmployee.Size = new System.Drawing.Size(1259, 359);
+            this.dgvEmployee.Size = new System.Drawing.Size(1292, 359);
             this.dgvEmployee.TabIndex = 11;
             this.dgvEmployee.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployee_CellContentClick);
-            // 
-            // EmployeeID
-            // 
-            this.EmployeeID.DataPropertyName = "EmployeeID";
-            this.EmployeeID.FillWeight = 80F;
-            this.EmployeeID.HeaderText = "Employee ID";
-            this.EmployeeID.MinimumWidth = 6;
-            this.EmployeeID.Name = "EmployeeID";
-            this.EmployeeID.Width = 125;
-            // 
-            // EmployeeCode
-            // 
-            this.EmployeeCode.DataPropertyName = "EmployeeCode";
-            this.EmployeeCode.HeaderText = "Employee Code";
-            this.EmployeeCode.MinimumWidth = 6;
-            this.EmployeeCode.Name = "EmployeeCode";
-            this.EmployeeCode.Width = 110;
-            // 
-            // EmployeeName
-            // 
-            this.EmployeeName.DataPropertyName = "EmployeeName";
-            this.EmployeeName.HeaderText = "Employee Name";
-            this.EmployeeName.MinimumWidth = 6;
-            this.EmployeeName.Name = "EmployeeName";
-            this.EmployeeName.Width = 120;
-            // 
-            // Position
-            // 
-            this.Position.DataPropertyName = "Position";
-            this.Position.HeaderText = "Position";
-            this.Position.MinimumWidth = 6;
-            this.Position.Name = "Position";
-            this.Position.Width = 125;
-            // 
-            // Authority
-            // 
-            this.Authority.DataPropertyName = "Authority";
-            this.Authority.HeaderText = "Authority";
-            this.Authority.MinimumWidth = 6;
-            this.Authority.Name = "Authority";
-            this.Authority.Width = 125;
-            // 
-            // Username
-            // 
-            this.Username.DataPropertyName = "Username";
-            this.Username.HeaderText = "Username";
-            this.Username.MinimumWidth = 6;
-            this.Username.Name = "Username";
-            this.Username.Width = 125;
-            // 
-            // Password
-            // 
-            this.Password.DataPropertyName = "Password";
-            this.Password.HeaderText = "Password";
-            this.Password.MinimumWidth = 6;
-            this.Password.Name = "Password";
-            this.Password.Width = 262;
             // 
             // cboAuthority
             // 
@@ -381,7 +324,60 @@
             this.label8.TabIndex = 63;
             this.label8.Text = "Search employee name:";
             // 
-            // frmManagementEmployee
+            // EmployeeID
+            // 
+            this.EmployeeID.DataPropertyName = "EmployeeID";
+            this.EmployeeID.FillWeight = 80F;
+            this.EmployeeID.HeaderText = "Employee ID";
+            this.EmployeeID.MinimumWidth = 6;
+            this.EmployeeID.Name = "EmployeeID";
+            // 
+            // EmployeeCode
+            // 
+            this.EmployeeCode.DataPropertyName = "EmployeeCode";
+            this.EmployeeCode.HeaderText = "Employee Code";
+            this.EmployeeCode.MinimumWidth = 6;
+            this.EmployeeCode.Name = "EmployeeCode";
+            this.EmployeeCode.Width = 110;
+            // 
+            // EmployeeName
+            // 
+            this.EmployeeName.DataPropertyName = "EmployeeName";
+            this.EmployeeName.HeaderText = "Employee Name";
+            this.EmployeeName.MinimumWidth = 6;
+            this.EmployeeName.Name = "EmployeeName";
+            this.EmployeeName.Width = 120;
+            // 
+            // Position
+            // 
+            this.Position.DataPropertyName = "Position";
+            this.Position.HeaderText = "Position";
+            this.Position.MinimumWidth = 6;
+            this.Position.Name = "Position";
+            // 
+            // Authority
+            // 
+            this.Authority.DataPropertyName = "Authority";
+            this.Authority.HeaderText = "Authority";
+            this.Authority.MinimumWidth = 6;
+            this.Authority.Name = "Authority";
+            // 
+            // Username
+            // 
+            this.Username.DataPropertyName = "Username";
+            this.Username.HeaderText = "Username";
+            this.Username.MinimumWidth = 6;
+            this.Username.Name = "Username";
+            // 
+            // Password
+            // 
+            this.Password.DataPropertyName = "Password";
+            this.Password.HeaderText = "Password";
+            this.Password.MinimumWidth = 6;
+            this.Password.Name = "Password";
+            this.Password.Width = 295;
+            // 
+            // frmEmployeeManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -412,7 +408,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvEmployee);
-            this.Name = "frmManagementEmployee";
+            this.Name = "frmEmployeeManagement";
             this.Text = "Employee management ";
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).EndInit();
             this.ResumeLayout(false);

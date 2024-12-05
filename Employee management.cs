@@ -13,10 +13,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Sales_Management
 {
-    public partial class frmManagementEmployee : Form
+    public partial class frmEmployeeManagement : Form
     {
         SqlConnection connection;
-        public frmManagementEmployee()
+        public frmEmployeeManagement()
         {
             InitializeComponent();
             connection = new SqlConnection("Server=DESKTOP-IP1KBSG\\PHAMVANHOANG;Database=Sales_Management_System;Integrated Security = True;");
@@ -46,32 +46,58 @@ namespace Sales_Management
             cboAuthority.SelectedItem = row.Cells["Authority"].Value?.ToString();
         }
 
+        private bool ValidateEmployeeData()
+        {
+            // Check if any field is empty
+            if (string.IsNullOrWhiteSpace(txtEmployeeCode.Text) ||
+                string.IsNullOrWhiteSpace(txtEmployeeName.Text) ||
+                string.IsNullOrWhiteSpace(txtUsername.Text) ||
+                string.IsNullOrWhiteSpace(txtPassword.Text) ||
+                cboPosition.SelectedIndex == -1 ||
+                cboAuthority.SelectedIndex == -1)
+            {
+                MessageBox.Show("All fields must be filled.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Check if the Employee code must be 4 characters or longer
+            if (txtEmployeeCode.Text.Length < 4)
+            {
+                MessageBox.Show("Employee code must be 4 characters or longer.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Check if the employee name does not contain special characters
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtEmployeeName.Text, @"[^a-zA-Z\s]"))
+            {
+                MessageBox.Show("Employee name must not contain special characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Check if the password meets complexity requirements
+            if (txtPassword.Text.Length < 8 ||
+                !System.Text.RegularExpressions.Regex.IsMatch(txtPassword.Text, @"[A-Z]") || 
+                !System.Text.RegularExpressions.Regex.IsMatch(txtPassword.Text, @"[a-z]") || 
+                !System.Text.RegularExpressions.Regex.IsMatch(txtPassword.Text, @"\d") ||   
+                !System.Text.RegularExpressions.Regex.IsMatch(txtPassword.Text, @"[@$!%*?&]")) 
+            {
+                MessageBox.Show("Password must be at least 8 characters long and include uppercase, lowercase, digits, and special characters.",
+                                "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+
         private void btnInsert_Click(object sender, EventArgs e)
         {
             try
             {
-                // Validate input fields
-                if (string.IsNullOrWhiteSpace(txtEmployeeCode.Text) ||
-                    string.IsNullOrWhiteSpace(txtEmployeeName.Text) ||
-                    string.IsNullOrWhiteSpace(txtUsername.Text) ||
-                    string.IsNullOrWhiteSpace(txtPassword.Text) ||
-                    cboPosition.SelectedIndex == -1 ||
-                    cboAuthority.SelectedIndex == -1)
+                // Validate the input data
+                if (!ValidateEmployeeData())
                 {
-                    MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (txtEmployeeCode.Text.Length < 3)
-                {
-                    MessageBox.Show("Employee code must be longer than 2 characters.", "Input error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (txtPassword.Text.Length < 6)
-                {
-                    MessageBox.Show("Password must be at least 6 characters long.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return; 
                 }
 
                 // Hash the password
@@ -86,7 +112,7 @@ namespace Sales_Management
                     cmd.Parameters.AddWithValue("@employeename", txtEmployeeName.Text.Trim());
                     cmd.Parameters.AddWithValue("@position", cboPosition.Text.Trim());
                     cmd.Parameters.AddWithValue("@username", txtUsername.Text.Trim());
-                    cmd.Parameters.AddWithValue("@password", hashedPassword); // Use hashed password
+                    cmd.Parameters.AddWithValue("@password", hashedPassword); 
                     cmd.Parameters.AddWithValue("@authority", cboAuthority.SelectedItem?.ToString());
 
                     connection.Open();
@@ -111,17 +137,17 @@ namespace Sales_Management
         {
             try
             {
+                // Check if an employee is selected for updating
                 if (string.IsNullOrWhiteSpace(txtEmployeeID.Text))
                 {
-                    MessageBox.Show("Please select an employee to update.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please select an employee to update.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Validate data types
-                if (!int.TryParse(txtEmployeeID.Text, out int employeeId))
+                // Validate the input data
+                if (!ValidateEmployeeData())
                 {
-                    MessageBox.Show("Employee ID must be an integer.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return; 
                 }
 
                 // Hash the password
@@ -132,12 +158,12 @@ namespace Sales_Management
                                      "Username=@username, Password=@password, Authority=@authority WHERE EmployeeID=@employeeid";
                 using (SqlCommand cmd = new SqlCommand(updateQuery, connection))
                 {
-                    cmd.Parameters.AddWithValue("@employeeid", employeeId);
+                    cmd.Parameters.AddWithValue("@employeeid", txtEmployeeID.Text.Trim());
                     cmd.Parameters.AddWithValue("@employeecode", txtEmployeeCode.Text.Trim());
                     cmd.Parameters.AddWithValue("@employeename", txtEmployeeName.Text.Trim());
                     cmd.Parameters.AddWithValue("@position", cboPosition.Text.Trim());
                     cmd.Parameters.AddWithValue("@username", txtUsername.Text.Trim());
-                    cmd.Parameters.AddWithValue("@password", hashedPassword); // Use hashed password
+                    cmd.Parameters.AddWithValue("@password", hashedPassword);
                     cmd.Parameters.AddWithValue("@authority", cboAuthority.SelectedItem?.ToString());
 
                     connection.Open();

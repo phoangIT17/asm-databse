@@ -44,10 +44,41 @@ namespace Sales_Management
             txtIssueDescription.Text = row.Cells["IssueDescription"].Value?.ToString();
         }
 
+        private bool ValidateFields()
+        {
+            // Check if any field is empty
+            if (string.IsNullOrWhiteSpace(txtEmployeeID.Text) ||
+                string.IsNullOrWhiteSpace(txtCustomerID.Text) ||
+                string.IsNullOrWhiteSpace(txtSupportDate.Text) ||
+                string.IsNullOrWhiteSpace(cboSupportType.Text) ||
+                string.IsNullOrWhiteSpace(txtIssueDescription.Text))
+            {
+                MessageBox.Show("Please fill in all fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+                DateTime supportDate;
+                if (!DateTime.TryParse(txtSupportDate.Text, out supportDate))
+                {
+                    MessageBox.Show("Support Date must be in the format MM/dd/yyyy.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSupportDate.Focus();
+                    return false;
+                }
+
+                return true; 
+        }
+
+
         private void btnInsert_Click(object sender, EventArgs e)
         {
             try
             {
+
+                if (!ValidateFields())
+                {
+                    return; // Exit the method if validation fails
+                }
+
                 // Insert Support transaction
                 string insertQuery = "INSERT INTO Support (EmployeeID, CustomerID, SupportDate, SupportType, IssueDescription) " +
                                      "VALUES (@employeeid, @customerid, @supportdate, @supporttype, @issuedescription)";
@@ -84,6 +115,11 @@ namespace Sales_Management
         {
             try
             {
+                if (!ValidateFields())
+                {
+                    return; 
+                }
+
                 // Update Support transaction
                 string updateQuery = "UPDATE Support SET EmployeeID = @employeeid, CustomerID = @customerid, " +
                                      "SupportDate = @supportdate, SupportType = @supporttype, IssueDescription = @issuedescription " +

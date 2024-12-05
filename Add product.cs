@@ -48,7 +48,7 @@ namespace Sales_Management
 
         private void dgvPurchasedInfoProduct_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Ensure a valid row index
+            if (e.RowIndex >= 0) 
             {
                 try
                 {
@@ -73,10 +73,36 @@ namespace Sales_Management
             //txtUnitPrice.Text = row.Cells["SellingPrice"].Value?.ToString();
         }
 
+        private bool ValidateInput()
+        {
+            // Check if quantity is a positive integer
+            if (!int.TryParse(txtQuantity.Text, out int quantity) || quantity <= 0)
+            {
+                MessageBox.Show("Quantity must be a positive integer.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Check if selling price is a positive decimal
+            if (!decimal.TryParse(txtUnitPrice.Text, out decimal sellingPrice) || sellingPrice <= 0)
+            {
+                MessageBox.Show("Selling price must be a positive number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true; 
+        }
+
+
         private void btnAddProduct_Click(object sender, EventArgs e)
         {           
             try
             {
+                // Validate input
+                if (!ValidateInput())
+                {
+                    return; 
+                }
+
                 // SQL command to insert into OrderDetails
                 string queryOrderDetails = "INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice) " +
                                             "VALUES (@OrderID, @ProductID, @Quantity, @UnitPrice)";
@@ -132,6 +158,13 @@ namespace Sales_Management
         {
             try
             {
+
+                // Validate input
+                if (!ValidateInput())
+                {
+                    return;
+                }
+
                 // SQL command to get the current quantity from OrderDetails
                 string queryGetCurrentQuantity = "SELECT Quantity FROM OrderDetails WHERE OrderID = @OrderID AND ProductID = @ProductID";
 
@@ -159,7 +192,7 @@ namespace Sales_Management
 
                     // Get the current quantity
                     object result = cmdGetCurrentQuantity.ExecuteScalar();
-                    int currentQuantity = (result != null) ? Convert.ToInt32(result) : 0; // Kiểm tra null
+                    int currentQuantity = (result != null) ? Convert.ToInt32(result) : 0; 
                     int newQuantity = Convert.ToInt32(txtQuantity.Text);
                     int quantityChange = newQuantity - currentQuantity;
 

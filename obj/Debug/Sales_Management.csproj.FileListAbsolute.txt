@@ -3,8 +3,6 @@ C:\Users\Dell\source\repos\Sales_Management\Sales_Management\bin\Debug\Sales_Man
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.csproj.AssemblyReference.cache
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmAdmin.resources
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmLogin.resources
-C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmManagementCustomer.resources
-C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmManagementEmployee.resources
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.Properties.Resources.resources
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmStatistics.resources
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.csproj.GenerateResource.cache
@@ -38,3 +36,5 @@ C:\Users\Dell\source\repos\Sales_Management\Sales_Management\bin\Debug\System.Me
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmImageManagement.resources
+C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmCustomerManagement.resources
+C:\Users\Dell\source\repos\Sales_Management\Sales_Management\obj\Debug\Sales_Management.frmEmployeeManagement.resources
