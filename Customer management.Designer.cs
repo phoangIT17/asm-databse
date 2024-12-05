@@ -1,6 +1,6 @@
 ﻿namespace Sales_Management
 {
-    partial class frmManagementCustomer
+    partial class frmCustomerManagement
     {
         /// <summary>
         /// Required designer variable.
@@ -103,6 +103,7 @@
             this.btnExit.TabIndex = 54;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // btnSort
             // 
@@ -353,7 +354,7 @@
             this.txtSearchByName.Size = new System.Drawing.Size(181, 22);
             this.txtSearchByName.TabIndex = 59;
             // 
-            // frmManagementCustomer
+            // frmCustomerManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -383,7 +384,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvCustomer);
-            this.Name = "frmManagementCustomer";
+            this.Name = "frmCustomerManagement";
             this.Text = "Customer management ";
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).EndInit();
             this.ResumeLayout(false);

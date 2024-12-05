@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace Sales_Management
 {
-    public partial class frmManagementCustomer : Form
+    public partial class frmCustomerManagement : Form
     {
         SqlConnection connection;
 
-        public frmManagementCustomer()
+        public frmCustomerManagement()
         {
             InitializeComponent();
             connection = new SqlConnection("Server=DESKTOP-IP1KBSG\\PHAMVANHOANG;Database=Sales_Management_System;Integrated Security=True;");
@@ -318,6 +318,16 @@ namespace Sales_Management
         private bool IsPhoneNumberInteger(string phoneNumber)
         {
             return phoneNumber.All(char.IsDigit); 
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }
