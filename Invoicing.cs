@@ -235,10 +235,18 @@ namespace Sales_Management
 
         private void btnExportInvoice_Click(object sender, EventArgs e)
         {
+            // Check if all required invoice information is filled
             if (string.IsNullOrEmpty(cboCustomerID.Text) || cboCustomerID.SelectedValue == null)
             {
-                MessageBox.Show("Please select an Order ID to export the invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show("Invoice printing information cannot be left blank. Please fill in all information before issuing invoice.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; 
+            }
+
+            // Check if at least one product is added to the invoice
+            if (dgvListPurchasedProduct.Rows.Count == 0)
+            {
+                MessageBox.Show("No products have been added to the invoice yet. Please add products before printing the invoice.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; 
             }
 
             // Put order ID into a variable

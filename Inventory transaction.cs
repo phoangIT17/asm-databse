@@ -81,8 +81,7 @@ namespace Sales_Management
             if (string.IsNullOrWhiteSpace(txtProductCode.Text) ||
                 string.IsNullOrWhiteSpace(txtEmployeeCode.Text) ||
                 string.IsNullOrWhiteSpace(cboTransactionType.Text) ||
-                string.IsNullOrWhiteSpace(txtQuantity.Text) ||
-                string.IsNullOrWhiteSpace(txtTransactionDate.Text))
+                string.IsNullOrWhiteSpace(txtQuantity.Text)) 
             {
                 MessageBox.Show("Please fill in all the required fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -100,6 +99,38 @@ namespace Sales_Management
             {
                 MessageBox.Show("Transaction date must be in a valid date format MM/DD/YYYY.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+
+            // Validate that export quantity does not exceed available stock
+            if (cboTransactionType.Text.Equals("Export", StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    string stockQuery = "SELECT SUM(CASE WHEN TransactionType = 'Import' THEN Quantity ELSE -Quantity END) AS StockQuantity " +
+                                        "FROM InventoryTransaction WHERE ProductCode = @productCode";
+                    using (SqlCommand cmd = new SqlCommand(stockQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@productCode", txtProductCode.Text);
+
+                        connection.Open();
+                        object result = cmd.ExecuteScalar();
+                        connection.Close();
+
+                        int availableStock = result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
+
+                        if (quantity > availableStock)
+                        {
+                            MessageBox.Show($"Export quantity cannot exceed the Import quantity of {availableStock}.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error validating stock quantity: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    connection.Close();
+                    return false;
+                }
             }
 
             return true;
@@ -264,7 +295,6 @@ namespace Sales_Management
             this.Hide();
             showQuantityInStock.Show();
         }
-
        
     }
 

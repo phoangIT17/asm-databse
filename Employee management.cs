@@ -67,6 +67,13 @@ namespace Sales_Management
                 return false;
             }
 
+            // Check if the Employee code does not contain spaces
+            if (txtEmployeeCode.Text.Contains(" "))
+            {
+                MessageBox.Show("Employee code must not contain spaces.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             // Check if the employee name does not contain special characters
             if (System.Text.RegularExpressions.Regex.IsMatch(txtEmployeeName.Text, @"[^a-zA-Z\s]"))
             {
